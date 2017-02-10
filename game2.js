@@ -1,12 +1,17 @@
-var myCanvas = document.getElementById("myCanvas");
+// Background 
+
+var myCanvas = document.getElementById('myCanvas');
 var ctx = myCanvas.getContext('2d');
+var background = document.getElementById('bg');
+ctx.drawImage(background, 0, 0);
+
+
 
 var xPos = 0;
 var yPos = 20
 var rectWidth = 100;
 var rectHeight = 100;
 var speed = 0;
-
 
 
 // Game-loop
@@ -52,5 +57,4 @@ function setCloseToEdge(inputx) {
 		xPos = 0;
 	}
 }
-
 
