@@ -6,12 +6,26 @@ var ctx = myCanvas.getContext('2d');
 var background = new Image();
 background.src = 'style/img/bg.png';
 
+// Skepp
+var xPosShip = 50;
+var yPosShip = 200;
+var rectWidthShip = 100;
+var rectHeightShip = 100;
 
-var xPos = 0;
-var yPos = 20
-var rectWidth = 100;
-var rectHeight = 100;
-var speed = 0;
+// Raket
+var rocketList = [
+	
+];
+var rectWidthRocket = 2;
+var rectHeightRocket = 6;
+
+// Fiende
+var xPosEnemy = 50;
+var yPosEnemy = 10;
+var rectWidthEnemy = 10;
+var rectHeightEnemy = 10;
+
+var shipSpeed = 0;
 
 
 // Game-loop
@@ -20,8 +34,9 @@ function gameTick() {
 	ctx.drawImage(background, 0, 0);
 	fill();
 
-	xPos += speed;
-	setCloseToEdge(xPos);
+	xPosShip += shipSpeed;
+	tickRockets();
+	setCloseToEdge(xPosShip);
 }
 
 
@@ -36,8 +51,24 @@ function clear() {
 
 // Fyller i rektangel
 function fill() {
-	ctx.fillRect(xPos, yPos, rectWidth, rectHeight);
+	// Skepp
+	ctx.fillRect(xPosShip, yPosShip, rectWidthShip, rectHeightShip);
 	ctx.fillStyle='#f3c9fc';
+
+	// Raket
+	rocketList.forEach(function(rocket) {
+		ctx.fillRect(rocket.x, rocket.y, rectWidthRocket, rectHeightRocket);
+	})
+	//ctx.fillRect(xPosRocket, yPosRocket, rectWidthRocket, rectHeightRocket);
+
+	// Fiende
+	ctx.fillRect(xPosEnemy, xPosEnemy, rectWidthEnemy, rectWidthEnemy);
+}
+
+function tickRockets() {
+	rocketList.forEach(function(rocket) {
+		rocket.y = rocket.y - 10;
+	})
 }
 
 // Sätter en event listener på keydown 
@@ -45,18 +76,26 @@ window.addEventListener('keydown', doKeyDown, true);
 
 function doKeyDown(e) {
 	if (e.key == 'd') {
-		speed = 2;
+		shipSpeed = 2;
 	} 
 	if (e.key == 'a') {
-		speed = -2;
+		shipSpeed = -2;
 	}
+	if (e.key == 'm') {
+		rocketList.push({
+			x: xPosShip,
+			y: yPosShip
+		})
+	} 
 }
 
+// När skeppet kommer nära kanten, sätt xPosShip till 500 eller 0
+// beroende på vilken sida man är på.
 function setCloseToEdge(inputx) {
-	if(inputx + rectWidth >= myCanvas.width) {
-		xPos = 500;
+	if(inputx + rectWidthShip >= myCanvas.width) {
+		xPosShip = 500;
 	} else if (inputx <= 0) {
-		xPos = 0;
+		xPosShip = 0;
 	}
 }
 
