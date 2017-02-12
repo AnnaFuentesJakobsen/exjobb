@@ -1,10 +1,10 @@
-// Background 
+
 
 var myCanvas = document.getElementById('myCanvas');
 var ctx = myCanvas.getContext('2d');
-var background = document.getElementById('bg');
-ctx.drawImage(background, 0, 0);
-
+// Background 
+var background = new Image();
+background.src = 'style/img/bg.png';
 
 
 var xPos = 0;
@@ -17,6 +17,7 @@ var speed = 0;
 // Game-loop
 function gameTick() {
 	clear();
+	ctx.drawImage(background, 0, 0);
 	fill();
 
 	xPos += speed;
@@ -36,6 +37,7 @@ function clear() {
 // Fyller i rektangel
 function fill() {
 	ctx.fillRect(xPos, yPos, rectWidth, rectHeight);
+	ctx.fillStyle='#f3c9fc';
 }
 
 // Sätter en event listener på keydown 
@@ -52,7 +54,7 @@ function doKeyDown(e) {
 
 function setCloseToEdge(inputx) {
 	if(inputx + rectWidth >= myCanvas.width) {
-		xPos = 800;
+		xPos = 500;
 	} else if (inputx <= 0) {
 		xPos = 0;
 	}
