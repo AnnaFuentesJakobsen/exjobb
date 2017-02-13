@@ -49,17 +49,16 @@ function clear() {
 	ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
 } 
 
-// Fyller i rektangel
+// FILL FUNCTION
 function fill() {
 	// Skepp
 	ctx.fillRect(xPosShip, yPosShip, rectWidthShip, rectHeightShip);
 	ctx.fillStyle='#f3c9fc';
 
-	// Raket
+	// Raketer
 	rocketList.forEach(function(rocket) {
 		ctx.fillRect(rocket.x, rocket.y, rectWidthRocket, rectHeightRocket);
 	})
-	//ctx.fillRect(xPosRocket, yPosRocket, rectWidthRocket, rectHeightRocket);
 
 	// Fiende
 	ctx.fillRect(xPosEnemy, xPosEnemy, rectWidthEnemy, rectWidthEnemy);
@@ -75,17 +74,22 @@ function tickRockets() {
 window.addEventListener('keydown', doKeyDown, true);
 
 function doKeyDown(e) {
+	// Ship Speed
 	if (e.key == 'd') {
 		shipSpeed = 2;
 	} 
 	if (e.key == 'a') {
 		shipSpeed = -2;
 	}
+	// Rocket
 	if (e.key == 'm') {
 		rocketList.push({
 			x: xPosShip,
 			y: yPosShip
-		})
+		});
+	}
+	if (e.key == 'g') {
+		console.log('Game over');
 	} 
 }
 

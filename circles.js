@@ -68,6 +68,7 @@ function draw() {
   ball2.vx = -ball2.vx;
 	}
 
+	// Kollisionshantering
 	var dx = ball1.x - ball2.x;
 	var dy = ball1.y - ball2.y;
 	var distance = Math.sqrt(dx * dx + dy * dy);
