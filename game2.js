@@ -88,6 +88,7 @@ function doKeyDown(e) {
 			y: yPosShip
 		});
 	}
+	// Game Over
 	if (e.key == 'g') {
 		console.log('Game over');
 	} 
