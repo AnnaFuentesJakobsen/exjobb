@@ -14,21 +14,39 @@ var rectHeightShip = 40;
 
 var shipSpeed = 0;
 
-// Raket
+// Fiende
+var enemyList = [
+	{
+		xPos: 50,
+		yPos: 200,
+		radius: 10
+	}, 
+	{
+		xPos: 100,
+		yPos: 200,
+		radius: 10
+	} 
+]
+
+
+// Skott
 var rocketList = [
 	
 ];
 var rectWidthRocket = 2;
 var rectHeightRocket = 6;
+var rocketRadius = 10;
 
-// Fiende
-var xPosEnemy = 50;
-var yPosEnemy = 10;
-var rectWidthEnemy = 10;
-var rectHeightEnemy = 10;
-var enemyRadius = 10;
+// Kollisionshantering mellan skott och fiende
+/*
+var dx = rocket.x - xPosEnemy;
+var dy = rocket.y - yPosEnemy;
 
+var distance = Math.sqrt(dx * dx + dy * dy);
 
+console.log(rocketRadius + enemyRadius);
+
+*/
 
 
 // Game-loop
@@ -61,22 +79,54 @@ function fill() {
 
 	// Raketer
 	rocketList.forEach(function(rocket) {
-		ctx.fillRect(rocket.x, rocket.y, rectWidthRocket, rectHeightRocket);
-	})
+		//ctx.fillRect(rocket.x, rocket.y, rectWidthRocket, rectHeightRocket);
+		ctx.beginPath();
+		ctx.arc(rocket.x, rocket.y, rocketRadius, 0, Math.PI * 2, true);
+		ctx.closePath();
+		ctx.fill();
+	});
 
 	// Fiende
 	//ctx.fillRect(xPosEnemy, xPosEnemy, rectWidthEnemy, rectWidthEnemy);
   // Cirkel
-		ctx.beginPath();
-		ctx.arc(xPosEnemy, yPosEnemy, enemyRadius, 0, Math.PI * 2, true);
-		ctx.closePath();
-		ctx.fill();
+  	enemyList.forEach(function(enemy) {
+			ctx.beginPath();
+			ctx.arc(enemy.xPos, enemy.yPos, enemy.radius, 0, Math.PI * 2, true);
+			ctx.closePath();
+			ctx.fill();
+	});
 }
 
+function collisionDetection(rocket, enemy) {
+	var dx = rocket.x - enemy.xPos;
+	var dy = rocket.y - enemy.yPos;
+		
+	var distance = Math.sqrt(dx * dx + dy * dy);
+
+	if(distance < rocketRadius + enemy.radius) {
+		return true
+	} else {
+		return false
+	}
+};
+
 function tickRockets() {
-	rocketList.forEach(function(rocket) {
-		rocket.y = rocket.y - 10;
-	})
+	rocketList.forEach(function(rocket, rocketidx) {
+		rocket.y = rocket.y - 1;
+
+		enemyList.forEach(function(enemy, enemyidx) {
+			if(collisionDetection(rocket, enemy)) {
+				enemyList.splice(enemyidx, 1);
+				rocketList.splice(rocketidx, 1);
+			}
+		});
+		/*if(result) {
+			console.log('hit');
+		} else {
+			console.log('miss');
+		}
+		*/
+	});
 }
 
 // Sätter en event listener på keydown 
