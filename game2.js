@@ -7,10 +7,12 @@ var background = new Image();
 background.src = 'style/img/bg.png';
 
 // Skepp
-var xPosShip = 50;
+var xPosShip = 300;
 var yPosShip = 300;
 var rectWidthShip = 40;
 var rectHeightShip = 40;
+
+var shipSpeed = 0;
 
 // Raket
 var rocketList = [
@@ -24,8 +26,9 @@ var xPosEnemy = 50;
 var yPosEnemy = 10;
 var rectWidthEnemy = 10;
 var rectHeightEnemy = 10;
+var enemyRadius = 10;
 
-var shipSpeed = 0;
+
 
 
 // Game-loop
@@ -35,6 +38,7 @@ function gameTick() {
 	fill();
 
 	xPosShip += shipSpeed;
+
 	tickRockets();
 	setCloseToEdge(xPosShip);
 }
@@ -61,7 +65,12 @@ function fill() {
 	})
 
 	// Fiende
-	ctx.fillRect(xPosEnemy, xPosEnemy, rectWidthEnemy, rectWidthEnemy);
+	//ctx.fillRect(xPosEnemy, xPosEnemy, rectWidthEnemy, rectWidthEnemy);
+  // Cirkel
+		ctx.beginPath();
+		ctx.arc(xPosEnemy, yPosEnemy, enemyRadius, 0, Math.PI * 2, true);
+		ctx.closePath();
+		ctx.fill();
 }
 
 function tickRockets() {
@@ -97,10 +106,10 @@ function doKeyDown(e) {
 // När skeppet kommer nära kanten, sätt xPosShip till 500 eller 0
 // beroende på vilken sida man är på.
 function setCloseToEdge(inputx) {
-	if(inputx + rectWidthShip >= myCanvas.width) {
-		xPosShip = 500;
-	} else if (inputx <= 0) {
-		xPosShip = 0;
+	if(inputx + rectWidthShip >= 580) {
+		xPosShip = 540;
+	} else if (inputx <= 20) {
+		xPosShip = 20;
 	}
 }
 
