@@ -85,12 +85,12 @@ function draw() {
 	}
 }
 
-// Rör sig när man rör musen över
+// Rör sig när man har musen över
 myCanvas.addEventListener('mouseover', function(e) {
   raf = window.requestAnimationFrame(draw);
   console.log('mouse over');
 });
-// Slutar röra sig
+// Slutar röra sig när musen dras bort
 myCanvas.addEventListener('mouseout', function(e) {
   window.cancelAnimationFrame(raf);
   console.log('mouse out');

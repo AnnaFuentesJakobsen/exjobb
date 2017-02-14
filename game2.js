@@ -8,9 +8,9 @@ background.src = 'style/img/bg.png';
 
 // Skepp
 var xPosShip = 50;
-var yPosShip = 200;
-var rectWidthShip = 100;
-var rectHeightShip = 100;
+var yPosShip = 300;
+var rectWidthShip = 40;
+var rectHeightShip = 40;
 
 // Raket
 var rocketList = [

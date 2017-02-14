@@ -1,6 +1,7 @@
 
-canvas {
-    padding: 0;
-    margin: auto;
-    display: block;
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 15%;
 }
