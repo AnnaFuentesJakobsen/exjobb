@@ -1,5 +1,3 @@
-
-
 var myCanvas = document.getElementById('myCanvas');
 var ctx = myCanvas.getContext('2d');
 // Background 
@@ -19,15 +17,16 @@ var enemyList = [
 	{
 		xPos: 50,
 		yPos: 200,
-		radius: 10
+		radius: 10,
 	}, 
 	{
 		xPos: 100,
 		yPos: 200,
-		radius: 10
+		radius: 10,
 	} 
 ]
 
+var enemySpeed = 2;
 
 // Skott
 var rocketList = [
@@ -37,17 +36,6 @@ var rectWidthRocket = 2;
 var rectHeightRocket = 6;
 var rocketRadius = 10;
 
-// Kollisionshantering mellan skott och fiende
-/*
-var dx = rocket.x - xPosEnemy;
-var dy = rocket.y - yPosEnemy;
-
-var distance = Math.sqrt(dx * dx + dy * dy);
-
-console.log(rocketRadius + enemyRadius);
-
-*/
-
 
 // Game-loop
 function gameTick() {
@@ -55,8 +43,10 @@ function gameTick() {
 	ctx.drawImage(background, 0, 0);
 	fill();
 
+	// Gör så att skeppet rör sig
 	xPosShip += shipSpeed;
 
+	moveEnemy();
 	tickRockets();
 	setCloseToEdge(xPosShip);
 }
@@ -73,22 +63,20 @@ function clear() {
 
 // FILL FUNCTION
 function fill() {
+
 	// Skepp
 	ctx.fillRect(xPosShip, yPosShip, rectWidthShip, rectHeightShip);
 	ctx.fillStyle='#f3c9fc';
 
 	// Raketer
 	rocketList.forEach(function(rocket) {
-		//ctx.fillRect(rocket.x, rocket.y, rectWidthRocket, rectHeightRocket);
 		ctx.beginPath();
 		ctx.arc(rocket.x, rocket.y, rocketRadius, 0, Math.PI * 2, true);
 		ctx.closePath();
 		ctx.fill();
 	});
 
-	// Fiende
-	//ctx.fillRect(xPosEnemy, xPosEnemy, rectWidthEnemy, rectWidthEnemy);
-  // Cirkel
+	// Fiender
   	enemyList.forEach(function(enemy) {
 			ctx.beginPath();
 			ctx.arc(enemy.xPos, enemy.yPos, enemy.radius, 0, Math.PI * 2, true);
@@ -97,6 +85,7 @@ function fill() {
 	});
 }
 
+// Kollisionshantering
 function collisionDetection(rocket, enemy) {
 	var dx = rocket.x - enemy.xPos;
 	var dy = rocket.y - enemy.yPos;
@@ -109,7 +98,8 @@ function collisionDetection(rocket, enemy) {
 		return false
 	}
 };
-
+// Går igenom varje raket och kollar varje fiende 
+// som finns kvar i listan
 function tickRockets() {
 	rocketList.forEach(function(rocket, rocketidx) {
 		rocket.y = rocket.y - 1;
@@ -120,14 +110,16 @@ function tickRockets() {
 				rocketList.splice(rocketidx, 1);
 			}
 		});
-		/*if(result) {
-			console.log('hit');
-		} else {
-			console.log('miss');
-		}
-		*/
 	});
 }
+
+
+// Gör så att fienderna rör sig 
+function moveEnemy() {
+	enemyList.forEach(function(enemy) {
+		console.log(enemy.xPos += enemySpeed);
+	});
+};
 
 // Sätter en event listener på keydown 
 window.addEventListener('keydown', doKeyDown, true);
