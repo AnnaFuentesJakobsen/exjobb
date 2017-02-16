@@ -14,17 +14,30 @@ var shipSpeed = 0;
 
 // Fiende
 var enemyList = [
-	{
+	/*{
 		xPos: 50,
 		yPos: 200,
-		radius: 10,
+		radius: 10
 	}, 
 	{
 		xPos: 100,
 		yPos: 200,
-		radius: 10,
-	} 
-]
+		radius: 10
+	} */
+];
+
+function createInvaders() {
+	for(var i = 1; i <= 5; i++) {
+		for(var j = 0; j <= 10; j++) {
+			enemyList.push({
+				xPos: 50 + j * 30,
+				yPos: 200 + i * 30,
+				radius: 10
+			});
+		}
+	}
+}
+
 
 var enemySpeed = 2;
 
@@ -54,6 +67,7 @@ function gameTick() {
 
 function init() {
 	var intervalID = window.setInterval(gameTick, 16);
+	createInvaders();
 }
 
 // Rensar canvas
