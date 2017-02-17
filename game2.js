@@ -4,34 +4,32 @@ var ctx = myCanvas.getContext('2d');
 var background = new Image();
 background.src = 'style/img/bg.png';
 
+
 // Skepp
+
+var shipImg = new Image();
+shipImg.src = 'style/img/ship.png';
+
 var xPosShip = 300;
 var yPosShip = 300;
-var rectWidthShip = 40;
-var rectHeightShip = 40;
+var rectWidthShip = 20;
+var rectHeightShip = 20;
 
 var shipSpeed = 0;
 
 // Fiende
-var enemyList = [
-	/*{
-		xPos: 50,
-		yPos: 200,
-		radius: 10
-	}, 
-	{
-		xPos: 100,
-		yPos: 200,
-		radius: 10
-	} */
-];
+var enemyImg = new Image();
+enemyImg.src = 'style/img/invader1.png';
+
+var enemyList = [ ];
+var enemySpeed = 2;
 
 function createInvaders() {
 	for(var i = 1; i <= 5; i++) {
 		for(var j = 0; j <= 10; j++) {
 			enemyList.push({
 				xPos: 50 + j * 30,
-				yPos: 200 + i * 30,
+				yPos: 50 + i * 30,
 				radius: 10
 			});
 		}
@@ -39,15 +37,14 @@ function createInvaders() {
 }
 
 
-var enemySpeed = 2;
-
 // Skott
-var rocketList = [
-	
-];
+var rocketImg = new Image();
+rocketImg.src = 'style/img/rocket.png';
+
+var rocketList = [ ];
 var rectWidthRocket = 2;
 var rectHeightRocket = 6;
-var rocketRadius = 10;
+var rocketRadius = 4;
 
 
 // Game-loop
@@ -67,6 +64,7 @@ function gameTick() {
 
 function init() {
 	var intervalID = window.setInterval(gameTick, 16);
+	// Hämtar fienderna en gång
 	createInvaders();
 }
 
@@ -81,14 +79,7 @@ function fill() {
 	// Skepp
 	ctx.fillRect(xPosShip, yPosShip, rectWidthShip, rectHeightShip);
 	ctx.fillStyle='#f3c9fc';
-
-	// Raketer
-	rocketList.forEach(function(rocket) {
-		ctx.beginPath();
-		ctx.arc(rocket.x, rocket.y, rocketRadius, 0, Math.PI * 2, true);
-		ctx.closePath();
-		ctx.fill();
-	});
+	ctx.drawImage(shipImg, xPosShip, yPosShip);
 
 	// Fiender
   	enemyList.forEach(function(enemy) {
@@ -96,6 +87,16 @@ function fill() {
 			ctx.arc(enemy.xPos, enemy.yPos, enemy.radius, 0, Math.PI * 2, true);
 			ctx.closePath();
 			ctx.fill();
+			ctx.drawImage(enemyImg, enemy.xPos, enemy.yPos);
+	});
+
+  // Raketer
+		rocketList.forEach(function(rocket) {
+		ctx.beginPath();
+		ctx.arc(rocket.x, rocket.y, rocketRadius, 0, Math.PI * 2, true);
+		ctx.closePath();
+		ctx.fill();
+		ctx.drawImage(rocketImg, rocket.x, rocket.y);
 	});
 }
 
