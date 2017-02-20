@@ -4,10 +4,12 @@ var ctx = myCanvas.getContext('2d');
 var background = new Image();
 background.src = 'style/img/bg.png';
 
-// Om variabeln är true visas cirklarna om inte så blir det false, för rendering
-//var flag = 
 
 // Skepp
+
+var counter = 0;
+
+var DEBUG_DRAW_SHAPES = false;
 
 var shipImg = new Image();
 shipImg.src = 'style/img/ship.png';
@@ -25,6 +27,7 @@ enemyImg.src = 'style/img/invader1.png';
 
 var enemyList = [ ];
 var enemySpeed = 2;
+var flip = false;
 
 function createInvaders() {
 	for(var i = 1; i <= 5; i++) {
@@ -37,7 +40,6 @@ function createInvaders() {
 		}
 	}
 }
-
 
 // Skott
 var rocketImg = new Image();
@@ -85,10 +87,12 @@ function fill() {
 
 	// Fiender
   	enemyList.forEach(function(enemy) {
-			ctx.beginPath();
-			ctx.arc(enemy.xPos, enemy.yPos, enemy.radius, 0, Math.PI * 2, true);
-			ctx.closePath();
-			ctx.fill();
+  		if(DEBUG_DRAW_SHAPES) {
+  			ctx.beginPath();
+				ctx.arc(enemy.xPos, enemy.yPos, enemy.radius, 0, Math.PI * 2, true);
+				ctx.closePath();
+				ctx.fill();
+  		}
 			ctx.drawImage(enemyImg, enemy.xPos -10, enemy.yPos -8);
 	});
 
@@ -134,10 +138,14 @@ function tickRockets() {
 // Gör så att fienderna rör sig 
 function moveEnemy() {
 	enemyList.forEach(function(enemy) {
-		enemy.xPos += enemySpeed;
-		if (enemy.xPos >= 560) {
+		enemy.xPos = enemy.xPos + enemySpeed;
+	});
+	enemyList.forEach(function(enemy) {
+		if (enemy.xPos + enemySpeed >= 560) {
+			//flip = true;
 			enemySpeed = -2;
-		} else if (enemy.xPos <= 20) {
+		} else if (enemy.xPos + enemySpeed <= 20) {
+			//flip = true;
 			enemySpeed = 2;
 		}
 	});
