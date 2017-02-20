@@ -4,6 +4,8 @@ var ctx = myCanvas.getContext('2d');
 var background = new Image();
 background.src = 'style/img/bg.png';
 
+// Om variabeln är true visas cirklarna om inte så blir det false, för rendering
+//var flag = 
 
 // Skepp
 
@@ -117,7 +119,7 @@ function collisionDetection(rocket, enemy) {
 // som finns kvar i listan
 function tickRockets() {
 	rocketList.forEach(function(rocket, rocketidx) {
-		rocket.y = rocket.y - 1;
+		rocket.y = rocket.y - 10;
 
 		enemyList.forEach(function(enemy, enemyidx) {
 			if(collisionDetection(rocket, enemy)) {
@@ -132,7 +134,12 @@ function tickRockets() {
 // Gör så att fienderna rör sig 
 function moveEnemy() {
 	enemyList.forEach(function(enemy) {
-		console.log(enemy.xPos += enemySpeed);
+		enemy.xPos += enemySpeed;
+		if (enemy.xPos >= 560) {
+			enemySpeed = -2;
+		} else if (enemy.xPos <= 20) {
+			enemySpeed = 2;
+		}
 	});
 };
 
@@ -163,7 +170,7 @@ function doKeyDown(e) {
 // När skeppet kommer nära kanten, sätt xPosShip till 500 eller 0
 // beroende på vilken sida man är på.
 function setCloseToEdge(inputx) {
-	if(inputx + rectWidthShip >= 580) {
+	if(inputx + rectWidthShip >= 560) {
 		xPosShip = 540;
 	} else if (inputx <= 20) {
 		xPosShip = 20;
