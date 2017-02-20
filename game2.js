@@ -81,7 +81,7 @@ function fill() {
 	// Skepp
 	ctx.fillRect(xPosShip, yPosShip, rectWidthShip, rectHeightShip);
 	ctx.fillStyle='#f3c9fc';
-	ctx.drawImage(shipImg, xPosShip, yPosShip);
+	ctx.drawImage(shipImg, xPosShip -10, yPosShip -4);
 
 	// Fiender
   	enemyList.forEach(function(enemy) {
@@ -89,7 +89,7 @@ function fill() {
 			ctx.arc(enemy.xPos, enemy.yPos, enemy.radius, 0, Math.PI * 2, true);
 			ctx.closePath();
 			ctx.fill();
-			ctx.drawImage(enemyImg, enemy.xPos, enemy.yPos);
+			ctx.drawImage(enemyImg, enemy.xPos -10, enemy.yPos -8);
 	});
 
   // Raketer
@@ -98,7 +98,7 @@ function fill() {
 		ctx.arc(rocket.x, rocket.y, rocketRadius, 0, Math.PI * 2, true);
 		ctx.closePath();
 		ctx.fill();
-		ctx.drawImage(rocketImg, rocket.x, rocket.y);
+		ctx.drawImage(rocketImg, rocket.x -4, rocket.y -4);
 	});
 }
 
@@ -119,7 +119,7 @@ function collisionDetection(rocket, enemy) {
 // som finns kvar i listan
 function tickRockets() {
 	rocketList.forEach(function(rocket, rocketidx) {
-		rocket.y = rocket.y - 10;
+		rocket.y = rocket.y - 2;
 
 		enemyList.forEach(function(enemy, enemyidx) {
 			if(collisionDetection(rocket, enemy)) {
