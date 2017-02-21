@@ -9,6 +9,7 @@ background.src = 'style/img/bg.png';
 
 var counter = 0;
 
+// Tar bort och lägger till bakgrund
 var DEBUG_DRAW_SHAPES = false;
 
 var shipImg = new Image();
@@ -81,8 +82,10 @@ function clear() {
 function fill() {
 
 	// Skepp
-	ctx.fillRect(xPosShip, yPosShip, rectWidthShip, rectHeightShip);
-	ctx.fillStyle='#f3c9fc';
+	if(DEBUG_DRAW_SHAPES) {
+		ctx.fillRect(xPosShip, yPosShip, rectWidthShip, rectHeightShip);
+		ctx.fillStyle='#f3c9fc';
+	};
 	ctx.drawImage(shipImg, xPosShip -10, yPosShip -4);
 
 	// Fiender
@@ -99,7 +102,7 @@ function fill() {
   // Raketer
 		rocketList.forEach(function(rocket) {
 		ctx.beginPath();
-		ctx.arc(rocket.x, rocket.y, rocketRadius, 0, Math.PI * 2, true);
+		ctx.arc(rocket.x , rocket.y, rocketRadius, 0, Math.PI * 2, true);
 		ctx.closePath();
 		ctx.fill();
 		ctx.drawImage(rocketImg, rocket.x -4, rocket.y -4);
@@ -142,10 +145,8 @@ function moveEnemy() {
 	});
 	enemyList.forEach(function(enemy) {
 		if (enemy.xPos + enemySpeed >= 560) {
-			//flip = true;
 			enemySpeed = -2;
 		} else if (enemy.xPos + enemySpeed <= 20) {
-			//flip = true;
 			enemySpeed = 2;
 		}
 	});
@@ -165,7 +166,7 @@ function doKeyDown(e) {
 	// Rocket
 	if (e.key == 'm') {
 		rocketList.push({
-			x: xPosShip,
+			x: xPosShip + 10,
 			y: yPosShip
 		});
 	}
