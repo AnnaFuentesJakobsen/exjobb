@@ -27,7 +27,8 @@ var enemyImg = new Image();
 enemyImg.src = 'style/img/invader1.png';
 
 var enemyList = [ ];
-var enemySpeed = 2;
+var enemySpeedX = 1;
+var enemySpeedY = 0.1;
 var flip = false;
 
 function createInvaders() {
@@ -54,6 +55,7 @@ var rocketRadius = 4;
 
 // Game-loop
 function gameTick() {
+	console.log(counter++);
 	clear();
 	ctx.drawImage(background, 0, 0);
 	fill();
@@ -61,7 +63,8 @@ function gameTick() {
 	// Gör så att skeppet rör sig
 	xPosShip += shipSpeed;
 
-	moveEnemy();
+	moveEnemyHorizontal();
+	moveEnemyVertical();
 	tickRockets();
 	setCloseToEdge(xPosShip);
 }
@@ -138,19 +141,29 @@ function tickRockets() {
 }
 
 
-// Gör så att fienderna rör sig 
-function moveEnemy() {
+// Gör så att fienderna rör sig x-axel
+function moveEnemyHorizontal() {
 	enemyList.forEach(function(enemy) {
-		enemy.xPos = enemy.xPos + enemySpeed;
+		enemy.xPos = enemy.xPos + enemySpeedX;
 	});
 	enemyList.forEach(function(enemy) {
-		if (enemy.xPos + enemySpeed >= 560) {
-			enemySpeed = -2;
-		} else if (enemy.xPos + enemySpeed <= 20) {
-			enemySpeed = 2;
+		if (enemy.xPos + enemySpeedX >= 560) {
+			enemySpeedX = -1;
+		} 
+		else if (enemy.xPos + enemySpeedX <= 40) {
+			enemySpeedX = 1;
 		}
 	});
 };
+
+// Fiender rör sig y-axel
+function moveEnemyVertical() {
+	enemyList.forEach(function(enemy) {
+		enemy.yPos = enemy.yPos + enemySpeedY ;
+	});
+};
+
+
 
 // Sätter en event listener på keydown 
 window.addEventListener('keydown', doKeyDown, true);
