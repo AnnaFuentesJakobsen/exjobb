@@ -64,7 +64,6 @@ function gameTick() {
 	welcome();
 	ctx.drawImage(background, 0, 0);
 	fill();
-	print
 
 	// Gör så att skeppet rör sig
 	xPosShip += shipSpeed;
@@ -183,7 +182,14 @@ function moveEnemyHorizontal() {
 // Fiender rör sig y-axel
 function moveEnemyVertical() {
 	enemyList.forEach(function(enemy) {
-		enemy.yPos = enemy.yPos + enemySpeedY ;
+		if(enemy.yPos <= 300) {
+			enemy.yPos = enemy.yPos + enemySpeedY;
+			//console.log("Go");
+		} else {
+			enemySpeedX = 0;
+			enemySpeedY = 0;
+			console.log("Dead");
+		}
 	});
 };
 
