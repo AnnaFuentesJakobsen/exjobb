@@ -1,17 +1,22 @@
 var myCanvas = document.getElementById('myCanvas');
 var ctx = myCanvas.getContext('2d');
+
 // Background 
 var background = new Image();
 background.src = 'style/img/bg.png';
 
-
-// Skepp
-
+// Score
 var counter = 0;
+
+
+
+
 
 // Tar bort och lägger till bakgrund
 var DEBUG_DRAW_SHAPES = false;
 
+
+// Skepp
 var shipImg = new Image();
 shipImg.src = 'style/img/ship.png';
 
@@ -55,10 +60,11 @@ var rocketRadius = 4;
 
 // Game-loop
 function gameTick() {
-	console.log(counter++);
 	clear();
+	welcome();
 	ctx.drawImage(background, 0, 0);
 	fill();
+	print
 
 	// Gör så att skeppet rör sig
 	xPosShip += shipSpeed;
@@ -67,6 +73,7 @@ function gameTick() {
 	moveEnemyVertical();
 	tickRockets();
 	setCloseToEdge(xPosShip);
+	setGameOver();
 }
 
 
@@ -74,7 +81,20 @@ function init() {
 	var intervalID = window.setInterval(gameTick, 16);
 	// Hämtar fienderna en gång
 	createInvaders();
+	printScore();
 }
+
+// Start Screen
+function welcome() {
+	ctx.font="30px Arial";
+	ctx.fillStyle = '#ffffff';
+	ctx.textBaseline="center";
+	ctx.textAlign="center";
+	ctx.fillText("Space Invaders", myCanvas.width / 2, myCanvas.height/2 - 40);
+	ctx.font="16px Arial";	
+	ctx.fillText("Press 'Space' to start.", myCanvas.width / 2, myCanvas.height/2);
+};
+
 
 // Rensar canvas
 function clear() {
@@ -125,6 +145,8 @@ function collisionDetection(rocket, enemy) {
 		return false
 	}
 };
+
+
 // Går igenom varje raket och kollar varje fiende 
 // som finns kvar i listan
 function tickRockets() {
@@ -135,11 +157,13 @@ function tickRockets() {
 			if(collisionDetection(rocket, enemy)) {
 				enemyList.splice(enemyidx, 1);
 				rocketList.splice(rocketidx, 1);
+				counter += 10;
+				printScore();
+				console.log(counter);
 			}
 		});
 	});
 }
-
 
 // Gör så att fienderna rör sig x-axel
 function moveEnemyHorizontal() {
@@ -163,6 +187,16 @@ function moveEnemyVertical() {
 	});
 };
 
+// Om fienderna når botten 
+function setGameOver() {
+	enemyList.forEach(function(enemy) {
+		if(enemy.xPos == 300) {
+			//console.log('dead');
+		} else {
+			//console.log('not dead');
+		}
+	}) 
+}
 
 
 // Sätter en event listener på keydown 
@@ -197,5 +231,9 @@ function setCloseToEdge(inputx) {
 	} else if (inputx <= 20) {
 		xPosShip = 20;
 	}
+}
+
+function printScore() {
+	var score = document.getElementById('score').innerHTML = "Total Score: " + counter;	
 }
 
