@@ -3,7 +3,7 @@ var ctx = myCanvas.getContext('2d');
 
 // Background 
 var background = new Image();
-background.src = 'style/img/bg.png';
+background.src = 'style/img/nightsky.png';
 
 // Score
 var counter = 0;
@@ -20,8 +20,8 @@ var DEBUG_DRAW_SHAPES = false;
 var shipImg = new Image();
 shipImg.src = 'style/img/ship.png';
 
-var xPosShip = 300;
-var yPosShip = 300;
+var xPosShip = 450;
+var yPosShip = 550;
 var rectWidthShip = 20;
 var rectHeightShip = 20;
 
@@ -150,7 +150,7 @@ function collisionDetection(rocket, enemy) {
 // som finns kvar i listan
 function tickRockets() {
 	rocketList.forEach(function(rocket, rocketidx) {
-		rocket.y = rocket.y - 2;
+		rocket.y = rocket.y - 1;
 
 		enemyList.forEach(function(enemy, enemyidx) {
 			if(collisionDetection(rocket, enemy)) {
@@ -170,7 +170,7 @@ function moveEnemyHorizontal() {
 		enemy.xPos = enemy.xPos + enemySpeedX;
 	});
 	enemyList.forEach(function(enemy) {
-		if (enemy.xPos + enemySpeedX >= 560) {
+		if (enemy.xPos + enemySpeedX >= 840) {
 			enemySpeedX = -1;
 		} 
 		else if (enemy.xPos + enemySpeedX <= 40) {
@@ -182,13 +182,13 @@ function moveEnemyHorizontal() {
 // Fiender rör sig y-axel
 function moveEnemyVertical() {
 	enemyList.forEach(function(enemy) {
-		if(enemy.yPos <= 300) {
+		if(enemy.yPos <= 540) {
 			enemy.yPos = enemy.yPos + enemySpeedY;
 			//console.log("Go");
 		} else {
 			enemySpeedX = 0;
 			enemySpeedY = 0;
-			console.log("Dead");
+			console.log("Game Over");
 		}
 	});
 };
@@ -232,10 +232,10 @@ function doKeyDown(e) {
 // När skeppet kommer nära kanten, sätt xPosShip till 500 eller 0
 // beroende på vilken sida man är på.
 function setCloseToEdge(inputx) {
-	if(inputx + rectWidthShip >= 560) {
-		xPosShip = 540;
-	} else if (inputx <= 20) {
-		xPosShip = 20;
+	if(inputx + rectWidthShip >= 860) {
+		xPosShip = 840;
+	} else if (inputx <= 40) {
+		xPosShip = 40;
 	}
 }
 
