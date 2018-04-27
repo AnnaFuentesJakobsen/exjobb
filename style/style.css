@@ -1,7 +1,33 @@
-#instructions ul {
-	
+body {
+  background: url('./img/back.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: white;
+  font-size: 20px;
+}
+
+canvas {
+  padding-left: 0;
+  padding-right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  width: 800px;
+  border: 1px solid #fff;
+}
+
+ul {
+  text-align: center;
+  list-style-type: none;
+}
+
+li {
+  float: left;
+  padding: 10px;
 }
 
 #score {
-	margin-left: 10px;
+  float: right;
+  /*margin-left: 40px;*/
 }
+

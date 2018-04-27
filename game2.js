@@ -2,8 +2,8 @@ var myCanvas = document.getElementById('myCanvas');
 var ctx = myCanvas.getContext('2d');
 
 // Background 
-var background = new Image();
-background.src = 'style/img/nightsky.png';
+// var background = new Image();
+// background.src = 'style/img/nightsky.png';
 
 // Score
 var counter = 0;
@@ -61,8 +61,8 @@ var rocketRadius = 4;
 // Game-loop
 function gameTick() {
 	clear();
-	welcome();
-	ctx.drawImage(background, 0, 0);
+	// welcome();
+	// ctx.drawImage(background, 0, 0);
 	fill();
 
 	// Gör så att skeppet rör sig
@@ -209,15 +209,19 @@ function setGameOver() {
 window.addEventListener('keydown', doKeyDown, true);
 
 function doKeyDown(e) {
+	// Start
+	if (e.keyCode == 13) {
+		console.log("hey");
+	}
 	// Ship Speed
-	if (e.key == 'd') {
+	if (e.keyCode == 39) {
 		shipSpeed = 2;
 	} 
-	if (e.key == 'a') {
+	if (e.keyCode == 37) {
 		shipSpeed = -2;
 	}
 	// Rocket
-	if (e.key == 'm') {
+	if (e.keyCode == 32) {
 		rocketList.push({
 			x: xPosShip + 10,
 			y: yPosShip
